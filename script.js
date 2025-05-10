@@ -15,9 +15,10 @@ back.addEventListener('click',function(){
 })
 })
 }
-// openFeatures()
-localStorage.clear
- var currentTask = []
+openFeatures()
+ 
+function todoList (){
+    var currentTask = []
 
  if(localStorage.getItem('currentTask')){
 
@@ -28,7 +29,6 @@ localStorage.clear
  }
     
 function renderTask(){
-localStorage.setItem('currentTask', JSON.stringify(currentTask))
 var allTask = document.querySelector('.allTask')
 
 var sum = ''
@@ -40,7 +40,14 @@ currentTask.forEach(function(elem,idx){
     </div>`
 })
 allTask.innerHTML = sum
-
+localStorage.setItem('currentTask', JSON.stringify(currentTask))
+document.querySelectorAll('.task button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        currentTask.splice(btn.id,1)
+             renderTask()
+             
+             })
+        })
 }
 renderTask()
  
@@ -60,18 +67,60 @@ form.addEventListener('submit', function (e) {
     )
     renderTask()
 
+    taskCheckbox.checked = false
     taskInput.value = ''
     taskDetailsInput.value = ''
-    taskCheckbox.checked = false
  })
   
- var markCompletedBtn = document.querySelectorAll('.task button')
-
- markCompletedBtn.forEach(function(btn){
-    btn.addEventListener('click', function(){
-             console.log(btn.id);
-             
-
- })
  
+}
+// todoList()
+function dailyPlanner(){
+    var dayPlanData = JSON.parse(localStorage.getItem('dayPlanData'))||{}
+
+var dayPlanner = document.querySelector('.day-planner')
+
+var hours = Array.from({length:18},(_,idx) =>`${6+idx}:00 - ${7+idx}:00`)
+ 
+var wholeDaySum = ''
+hours.forEach(function(elem,idx){
+
+    var savedData = dayPlanData[idx]||''
+  wholeDaySum = wholeDaySum + ` <div class="day-planner-time">
+                    <p>${elem}</p>
+                    <input id=${idx} type="text" in placeholder="..." value = ${savedData}>
+                </div>`
 })
+
+dayPlanner.innerHTML = wholeDaySum
+
+var dayPlannerInput = document.querySelectorAll('.day-planner input')
+
+dayPlannerInput.forEach(function(elem){
+    elem.addEventListener('input', function(){
+        
+    dayPlanData[elem.id] = elem.value
+    
+    localStorage.setItem('dayPlanData', JSON.stringify(dayPlanData))
+    
+    })
+      })
+}
+// dailyPlanner()
+
+function motivationalQuote(){
+    var motivationQuoteContent = document.querySelector('.motivation-2 h1')
+var motivationAuthor = document.querySelector('.motivation-3 h2')
+
+async function fetchQuote(){
+ let response = await fetch('https://api.quotable.io/random')
+ console.log(response.json());
+ 
+ motivationQuoteContent.innerHTML = data.content
+ motivationAuthor.innerHTML = data.author 
+ 
+}
+fetchQuote()
+
+}
+motivationalQuote()
