@@ -74,7 +74,7 @@ form.addEventListener('submit', function (e) {
   
  
 }
-// todoList()
+todoList()
 function dailyPlanner(){
     var dayPlanData = JSON.parse(localStorage.getItem('dayPlanData'))||{}
 
@@ -106,7 +106,7 @@ dayPlannerInput.forEach(function(elem){
     })
       })
 }
-// dailyPlanner()
+dailyPlanner()
 
 function motivationalQuote(){
     var motivationQuoteContent = document.querySelector('.motivation-2 h1')
@@ -124,3 +124,70 @@ fetchQuote()
 
 }
 motivationalQuote()
+
+let timer = document.querySelector('.pomo-timer h1')
+var startBtn = document.querySelector('.pomo-timer .start-timer')
+var pauseBtn = document.querySelector('.pomo-timer .pause-timer')
+var resetBtn = document.querySelector('.pomo-timer .reset-timer')
+var session = document.querySelector('.pomodoro-fullpage .session')
+var isworkSession = true
+
+
+let totalSeconds = 25*60
+let timerInterval = null
+
+function upDateTimer(){
+    let minutes = Math.floor(totalSeconds/60)
+    let seconds = totalSeconds%60
+
+    timer.innerHTML = `${String(minutes).padStart('2','0')}:${String(seconds).padStart('2','0')}`
+    
+}
+function startTimer(){
+    clearInterval(timerInterval)
+
+   if(isworkSession){
+     timerInterval = setInterval(function(){
+     if (totalSeconds > 0){
+        totalSeconds--
+        upDateTimer()
+    }else{
+        isworkSession = false
+        clearInterval(timerInterval)
+        timer.innerHTML = '05:00'
+        session.innerHTML = 'take a break'
+        session.style.background = 'var(--blue)'
+        totalSeconds = 5 * 60
+    }
+}, 10)
+   }else{
+    timerInterval = setInterval(function(){
+     if (totalSeconds > 0){
+        totalSeconds--
+        
+    }else{
+        isworkSession = true
+        clearInterval(timerInterval)
+        timer.innerHTML = '25:00'
+        session.innerHTML = 'Work Session'
+        session.style.background = 'var(--green)'
+         totalSeconds = 25*60
+    }
+    upDateTimer()
+}, 10)
+   }
+     
+   }
+
+function pauseTimer(){
+    clearInterval(timerInterval)
+}
+
+function resetTimer(){
+    totalSeconds = 25*60
+    clearInterval(timerInterval)
+    upDateTimer()
+}
+startBtn.addEventListener('click', startTimer)
+pauseBtn.addEventListener('click', pauseTimer)
+resetBtn.addEventListener('click', resetTimer)
