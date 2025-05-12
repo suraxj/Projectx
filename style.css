@@ -3,7 +3,7 @@
     --sec: #4E1F00;
     --tri1: #FEBA17;
     --tri2: #74512D;
-    --red: red;
+    --red:  red;
     --green: rgb(9,138,89);
     --blue: rgb(0,191,255);
 }
@@ -55,11 +55,48 @@ section.allElems{
     width: 100%;
     padding: 40px;
     padding-top: 80px;
+    position: absolute;
+}
+.allElems header{
+    height: 400px;
+    width: 100%;
+    background-image:url('https://images.unsplash.com/photo-1717361279773-b2e7ee713d2e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') ;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+}
+header .header1 h1{
+    font-size: 90px;
+    font-weight: 500;
+    }
+header .header1 h4{
+    font-size: 90px;
+    font-weight: 500;
+    }
+header .header2 h2{
+    font-size: 60px;
+    font-weight: 700;
+    }
+header .header2 h4{
+    font-size: 30px;
+    font-weight: 500;
+    }
+header .header2 h3{
+    font-size: 25px;
+    font-weight: 500;
+    opacity: 0.8;
+    }
+
+.allElems .allFeatures{
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 40px;
-    position: absolute;
 }
 .elem {
     background-color: #FEBA17;

@@ -125,7 +125,8 @@ fetchQuote()
 }
 motivationalQuote()
 
-let timer = document.querySelector('.pomo-timer h1')
+function pomodoroTimer(){
+    let timer = document.querySelector('.pomo-timer h1')
 var startBtn = document.querySelector('.pomo-timer .start-timer')
 var pauseBtn = document.querySelector('.pomo-timer .pause-timer')
 var resetBtn = document.querySelector('.pomo-timer .reset-timer')
@@ -191,3 +192,26 @@ function resetTimer(){
 startBtn.addEventListener('click', startTimer)
 pauseBtn.addEventListener('click', pauseTimer)
 resetBtn.addEventListener('click', resetTimer)
+}
+pomodoroTimer()
+
+var apiKey = 'ca8c2af98d044559803175511252404'
+var city = 'Bhopal'
+
+var data = null
+async function weatherAPICall(){
+var response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
+
+data = await response.json()   
+}
+weatherAPICall()
+
+function timeDate(){
+    const totalDaysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday'];
+    var date = new Date()
+    var dayOfWeek = totalDaysOfWeek[date.getDay()];
+    var hours = date.getHours()
+    var minutes = date.getMinutes()
+    header1Date.innerHTML = `${dayOfWeek}, ${hours}:${minutes} pm`;
+}
+timeDate()
