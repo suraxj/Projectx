@@ -74,7 +74,7 @@ form.addEventListener('submit', function (e) {
   
  
 }
-todoList()
+// todoList()
 function dailyPlanner(){
     var dayPlanData = JSON.parse(localStorage.getItem('dayPlanData'))||{}
 
@@ -106,7 +106,7 @@ dayPlannerInput.forEach(function(elem){
     })
       })
 }
-dailyPlanner()
+// dailyPlanner()
 
 function motivationalQuote(){
     var motivationQuoteContent = document.querySelector('.motivation-2 h1')
@@ -123,7 +123,7 @@ async function fetchQuote(){
 fetchQuote()
 
 }
-motivationalQuote()
+// motivationalQuote()
 
 function pomodoroTimer(){
     let timer = document.querySelector('.pomo-timer h1')
@@ -193,25 +193,60 @@ startBtn.addEventListener('click', startTimer)
 pauseBtn.addEventListener('click', pauseTimer)
 resetBtn.addEventListener('click', resetTimer)
 }
-pomodoroTimer()
+// pomodoroTimer()
 
 var apiKey = 'ca8c2af98d044559803175511252404'
 var city = 'Bhopal'
+
+var header1Time = document.querySelector('.header1 h1')
+var header1Date = document.querySelector('.header1 h2')
+var header2Temp = document.querySelector('.header2 h2')
+var header2Condition = document.querySelector('.header2 h4')
+var precipitation = document.querySelector('.header2 .precipitation')
+var humidity = document.querySelector('.header2 .humidity')
+var wind = document.querySelector('.header2 .wind')
 
 var data = null
 async function weatherAPICall(){
 var response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
 
-data = await response.json()   
+data = await response.json() 
+console.log(data.current);
+  
+
+header2Temp.innerHTML = `${data.current.temp_c}°C`
+header2Condition.innerHTML = `${data.current.condition.text}`
+wind.innerHTML = `Wind: ${data.current.wind_kph} km/h`
+humidity.innerHTML = `Humidity: ${data.current.humidity}`
+precipitation.innerHTML = `Heat Index: ${data.current.heatindex_c}`
+
 }
 weatherAPICall()
 
 function timeDate(){
-    const totalDaysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday'];
+    const totalDaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday']
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
     var date = new Date()
-    var dayOfWeek = totalDaysOfWeek[date.getDay()];
+    var day0fWeek =  totalDaysOfWeek[date.getDay()]
     var hours = date.getHours()
     var minutes = date.getMinutes()
-    header1Date.innerHTML = `${dayOfWeek}, ${hours}:${minutes} pm`;
+    var seconds = date.getSeconds()
+    var  din    = date.getDate()
+    var month = monthNames[date.getMonth()]
+    var year = date.getFullYear()
+
+    header1Date.innerHTML = `${din},${month},${year}`
+    
+    if(hours>12){
+        header1Time.innerHTML = `${day0fWeek}, ${String(hours-12).padStart('2','0')}:${String(minutes).padStart('2','0')}:${String(seconds).padStart('2','0')} PM`
+    }else{
+        header1Time.innerHTML = `${day0fWeek}, ${String(hours).padStart('2','0')}:${String(minutes).padStart('2','0')}:${String(seconds).padStart('2','0')} AM`
+    }
 }
-timeDate()
+setInterval(() =>{
+    timeDate()
+}, 1000);
+
+
