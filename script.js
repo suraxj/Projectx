@@ -195,6 +195,7 @@ resetBtn.addEventListener('click', resetTimer)
 }
 // pomodoroTimer()
 
+function weatherFunctionality(){
 var apiKey = 'ca8c2af98d044559803175511252404'
 var city = 'Bhopal'
 
@@ -248,5 +249,34 @@ function timeDate(){
 setInterval(() =>{
     timeDate()
 }, 1000);
+}
+weatherFunctionality()
+
+var theme = document.querySelector('.theme')
+var rootElement = document.documentElement
+var flag = 0
+theme.addEventListener('click',function(){
+
+if (flag == 0){
+rootElement.style.setProperty('--pri','#F8F4E1')
+rootElement.style.setProperty('--sec','#222831')
+rootElement.style.setProperty('--tri1','#948979')
+rootElement.style.setProperty('--tri2','#393E46')
+flag = 1
+}else if(flag == 1){
+rootElement.style.setProperty('--pri','#F1EFEC')
+rootElement.style.setProperty('--sec','#030303')
+rootElement.style.setProperty('--tri1','#D4C9BE')
+rootElement.style.setProperty('--tri2','#123458')
+flag = 2
+}else if(flag == 2){
+rootElement.style.setProperty('--pri','#F8F4E1')
+rootElement.style.setProperty('--sec','#381c0a')
+rootElement.style.setProperty('--tri1','#FEBA17')
+rootElement.style.setProperty('--tri2','#74512D')
+flag = 0
+}
+})
+
 
 
